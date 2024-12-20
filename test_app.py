@@ -1,26 +1,21 @@
 import pytest
-from app import SolarCalculator
+from app import NutritionCalculator
 
 @pytest.fixture
 def calculator():
-    return SolarCalculator()
+    return NutritionCalculator()
 
-def test_energy_generated(calculator):
-    assert calculator.energy_generated(10, 0.2, 5) == 10000  # Wh
+def test_calories_burned(calculator):
+    assert calculator.calories_burned(70, 30, 0.05) == 105.0  # Calories
     with pytest.raises(ValueError):
-        calculator.energy_generated(-10, 0.2, 5)
+        calculator.calories_burned(-70, 30, 0.05)
 
-def test_cost_per_watt(calculator):
-    assert calculator.cost_per_watt(500, 250) == 2  # $/W
+def test_total_calories(calculator):
+    assert calculator.total_calories(100, 50, 20) == 930  # Calories
     with pytest.raises(ValueError):
-        calculator.cost_per_watt(500, 0)
+        calculator.total_calories(-100, 50, 20)
 
-def test_charging_time(calculator):
-    assert calculator.charging_time(1000, 200) == 5  # Hours
+def test_calorie_deficit(calculator):
+    assert calculator.calorie_deficit(2000, 600) == 1400  # Calories
     with pytest.raises(ValueError):
-        calculator.charging_time(1000, -200)
-
-def test_panel_efficiency_drop(calculator):
-    assert pytest.approx(calculator.panel_efficiency_drop(0.2, 5, 0.02), 0.0001) == 0.18048
-    with pytest.raises(ValueError):
-        calculator.panel_efficiency_drop(-0.2, 5, 0.02)
+        calculator.calorie_deficit(2000,-600)

@@ -1,30 +1,22 @@
-import numpy as np
 
-class SolarCalculator:
-    def energy_generated(self, solar_panel_area, efficiency, sunlight_hours):
-        if solar_panel_area <= 0 or efficiency <= 0 or sunlight_hours <= 0:
+class NutritionCalculator:
+    def calories_burned(self, weight, activity_minutes, calories_per_kg_per_minute):
+        if weight <= 0 or activity_minutes <= 0 or calories_per_kg_per_minute <= 0:
             raise ValueError("All input values must be positive.")
-        return solar_panel_area * efficiency * sunlight_hours * 1000  # Energy in Wh
+        return weight * activity_minutes * calories_per_kg_per_minute
 
-    def cost_per_watt(self, total_cost, watts):
-        if total_cost <= 0 or watts <= 0:
-            raise ValueError("Total cost and watts must be positive values.")
-        return total_cost / watts
+    def total_calories(self, carbs, proteins, fats):
+        if carbs < 0 or proteins < 0 or fats < 0:
+            raise ValueError("Nutrient values cannot be negative.")
+        return (carbs * 4) + (proteins * 4) + (fats * 9)
 
-    def charging_time(self, battery_capacity, charging_power):
-        if battery_capacity <= 0 or charging_power <= 0:
-            raise ValueError("Battery capacity and charging power must be positive values.")
-        return battery_capacity / charging_power  # Time in hours
+    def calorie_deficit(self, calories_consumed, calories_burned):
+        if calories_consumed < 0 or calories_burned < 0:
+            raise ValueError("Calories cannot be negative.")
+        return calories_consumed - calories_burned
 
-    def panel_efficiency_drop(self, initial_efficiency, years, degradation_rate):
-        if initial_efficiency <= 0 or years < 0 or degradation_rate < 0:
-            raise ValueError("Efficiency must be positive, and years/degradation rate must be non-negative.")
-        return initial_efficiency * ((1 - degradation_rate) ** years)
-
-if __name__ == "_main_":
-    calculator = SolarCalculator()
-    print("Energy generated (10m², 0.2 efficiency, 5 hours):", calculator.energy_generated(10, 0.2, 5), "Wh")
-    print("Cost per watt ($500, 250 watts):", calculator.cost_per_watt(500, 250), "$/W")
-    print("Charging time (1000 Wh battery, 200 W charging):", calculator.charging_time(1000, 200), "hours")
-    print("Efficiency after 5 years (0.2 initial, 0.02 degradation rate):", 
-          calculator.panel_efficiency_drop(0.2,5,0.02))
+if __name__== "_main_":
+    calculator = NutritionCalculator()
+    print("Calories burned (70kg, 30 minutes, 0.05 cal/kg/min):", calculator.calories_burned(70, 30, 0.05), "cal")
+    print("Total calories (100g carbs, 50g proteins, 20g fats):", calculator.total_calories(100, 50, 20), "cal")
+    print("Calorie deficit (2000 consumed, 600 burned):", calculator.calorie_deficit(2000, 600),"cal")
