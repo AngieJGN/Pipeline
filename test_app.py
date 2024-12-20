@@ -11,7 +11,7 @@ def test_calories_burned(calculator):
         calculator.calories_burned(-70, 30, 0.05)
 
 def test_total_calories(calculator):
-    assert calculator.total_calories(100, 50, 20) == 930  # Calories
+    assert calculator.total_calories(100, 50, 20) == 780  # Calories
     with pytest.raises(ValueError):
         calculator.total_calories(-100, 50, 20)
 
