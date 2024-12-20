@@ -41,4 +41,4 @@ jobs:
               with:
                   context: .
                   push: true
-                  tags: uo289855uniovies/Pipeline:${{github.sha}}
+                  tags: uo289855uniovies/pipeline:${{github.sha}}
