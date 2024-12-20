@@ -1,26 +1,26 @@
 import pytest
-from app import GeometryCalculator
+from app import SolarCalculator
 
 @pytest.fixture
 def calculator():
-    return GeometryCalculator()
+    return SolarCalculator()
 
-def test_area_of_rectangle(calculator):
-    assert calculator.area_of_rectangle(3, 4) == 12
+def test_energy_generated(calculator):
+    assert calculator.energy_generated(10, 0.2, 5) == 10000  # Wh
     with pytest.raises(ValueError):
-        calculator.area_of_rectangle(-1, 4)
+        calculator.energy_generated(-10, 0.2, 5)
 
-def test_perimeter_of_rectangle(calculator):
-    assert calculator.perimeter_of_rectangle(3, 4) == 14
+def test_cost_per_watt(calculator):
+    assert calculator.cost_per_watt(500, 250) == 2  # $/W
     with pytest.raises(ValueError):
-        calculator.perimeter_of_rectangle(0, 4)
+        calculator.cost_per_watt(500, 0)
 
-def test_area_of_circle(calculator):
-    assert pytest.approx(calculator.area_of_circle(5), 0.0001) == 78.53975
+def test_charging_time(calculator):
+    assert calculator.charging_time(1000, 200) == 5  # Hours
     with pytest.raises(ValueError):
-        calculator.area_of_circle(-5)
+        calculator.charging_time(1000, -200)
 
-def test_perimeter_of_circle(calculator):
-    assert pytest.approx(calculator.perimeter_of_circle(5), 0.0001) == 31.4159
+def test_panel_efficiency_drop(calculator):
+    assert pytest.approx(calculator.panel_efficiency_drop(0.2, 5, 0.02), 0.0001) == 0.18048
     with pytest.raises(ValueError):
-        calculator.perimeter_of_circle(0)
+        calculator.panel_efficiency_drop(-0.2, 5, 0.02)
